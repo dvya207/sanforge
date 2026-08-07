@@ -147,12 +147,6 @@ Please read our [Contributing Guidelines](./CONTRIBUTING.md) for more details.
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## 📞 Contact
-
-- **Project Lead**: [Your Name](mailto:your.email@example.com)
-- **GitHub**: [https://github.com/yourusername/sanforge](https://github.com/yourusername/sanforge)
-- **Issues**: [Report bugs or request features](https://github.com/yourusername/sanforge/issues)
-
 ---
 
 Made with ❤️ by the SanForge team.
