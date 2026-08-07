@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { API } from "../api/api";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import { UserPlus, Upload, CheckCircle, Mail, Key } from "lucide-react"; // Added Mail and Key icons
@@ -85,8 +85,8 @@ export default function Signup() {
 
     setUploading(true); // Reusing uploading state for OTP sending
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/send-signup-otp", // New endpoint
+      const res = await API.post(
+        "/auth/send-signup-otp", // New endpoint
         { email: form.email }
       );
       toast.success(res.data.message || "OTP sent to your email!");
@@ -108,12 +108,9 @@ export default function Signup() {
 
     try {
       // ✅ Updated submission: Send form data AND OTP for verification
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        { ...form, otp }, // Pass OTP with the form data
-        {
-          withCredentials: true,
-        }
+      const res = await API.post(
+        "/auth/signup",
+        { ...form, otp } // Pass OTP with the form data
       );
       toast.success(res.data.message || "Signup successful!");
       setSuccess(true);

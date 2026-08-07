@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { API } from "../api/api";
 import { useParams } from "react-router-dom";
 import {
   SandpackProvider,
@@ -18,10 +18,8 @@ export default function ViewCode() {
   const [tab, setTab] = useState(1); // 1 = Code, 2 = Preview
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/saved/${id}`, {
-        withCredentials: true,
-      })
+    API
+      .get(`/saved/${id}`)
       .then(res => setItem(res.data))
       .catch(err => console.error("Failed to fetch saved code:", err))
       .finally(() => setLoading(false));

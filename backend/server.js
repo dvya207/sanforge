@@ -15,15 +15,34 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // ✅ Allow credentials (important!)
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // adjust if your frontend runs elsewhere
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
 
 // ✅ Connect DB
 connectDB();
+
+// ✅ Health Check Endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "SanForge backend is healthy",
+  });
+});
 
 // ✅ Routes
 app.use("/api/auth", authRoutes);

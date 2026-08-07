@@ -1,4 +1,4 @@
-import axios from "axios";
+import { API } from "../api/api";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,10 +16,8 @@ export default function SavedCodes() {
   ];
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/saved/my-codes", {
-        withCredentials: true,
-      })
+    API
+      .get("/saved/my-codes")
       .then(res => setItems(res.data))
       .catch(err => console.error("Failed to fetch saved codes:", err))
       .finally(() => setLoading(false));

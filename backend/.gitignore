@@ -17,7 +17,10 @@ yarn-error.log*
 # Environment variables
 # ----------------------------
 .env
-!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # ----------------------------
 # Build folders
