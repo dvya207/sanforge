@@ -1,24 +1,33 @@
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 /**
- * Send an email using Resend HTTP API (works on Render free tier).
+ * Send an email using Brevo (Sendinblue) HTTP API.
+ * Works on Render free tier (no SMTP ports needed).
  * @param {string} to - Recipient email
  * @param {string} subject - Email subject
  * @param {string} html - HTML body
  */
 export const sendEmail = async (to, subject, html) => {
-  const { data, error } = await resend.emails.send({
-    from: "SanForge <onboarding@resend.dev>", // Free Resend domain (no DNS setup needed)
-    to,
-    subject,
-    html,
+  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "api-key": process.env.BREVO_API_KEY,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      sender: {
+        name: "SanForge",
+        email: process.env.BREVO_SENDER_EMAIL,
+      },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   });
 
-  if (error) {
-    throw new Error(`Resend error: ${error.message}`);
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(`Brevo error: ${JSON.stringify(error)}`);
   }
 
-  return data;
+  return await response.json();
 };
