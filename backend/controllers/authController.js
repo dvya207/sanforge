@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import nodemailer from "nodemailer";
+import { sendEmail } from "../utils/sendEmail.js";
 
 // ✅ New Controller: Send OTP for Signup
 // ✅ New Controller: Send OTP for Signup
@@ -35,39 +35,18 @@ export const sendSignupOtp = async (req, res) => {
 
     await user.save();
 
-    console.log(`🔑 [DEBUG] OTP generated for ${email}: ${otp}`);
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true, // Use SSL
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Email Verification OTP - GenUI Signup",
-      html: `
+    await sendEmail(
+      email,
+      "Email Verification OTP - SanForge Signup",
+      `
         <h2>Verify Your Email</h2>
         <p>Your OTP for signing up is:</p>
-        <h3>${otp}</h3>
+        <h1 style="letter-spacing:4px;">${otp}</h1>
         <p>This OTP will expire in 5 minutes.</p>
-      `,
-    };
+      `
+    );
 
-    // Try sending email, but don't let a timeout block user testing
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (mailErr) {
-      console.error("⚠️ Nodemailer failed to send email:", mailErr.message);
-      // We will still allow the request to succeed so they can use the console OTP for signup!
-    }
-
-    res.json({ message: "OTP sent successfully (Check email or server logs)" });
+    res.json({ message: "OTP sent to your email successfully" });
   } catch (err) {
     console.error("Error sending signup OTP:", err);
     res.status(500).json({ message: "Failed to send OTP", error: err.message });
@@ -262,35 +241,16 @@ export const sendOtp = async (req, res) => {
     user.otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes expiry
     await user.save(); // 4. Send Email
 
-    console.log(`🔑 [DEBUG] Forgot Password OTP generated for ${email}: ${otp}`);
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Password Reset OTP - GenUI",
-      html: `
+    await sendEmail(
+      email,
+      "Password Reset OTP - SanForge",
+      `
         <h2>Reset Your Password</h2>
         <p>Your OTP for resetting your password is:</p>
-        <h3>${otp}</h3>
+        <h1 style="letter-spacing:4px;">${otp}</h1>
         <p>This OTP will expire in 5 minutes.</p>
-      `,
-    };
-
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (mailErr) {
-      console.error("⚠️ Nodemailer failed to send password reset email:", mailErr.message);
-    }
+      `
+    );
 
     res.json({
       message: "If the email is registered, you will receive an OTP shortly.",
