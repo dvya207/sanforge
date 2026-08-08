@@ -4,11 +4,7 @@ AI-powered UI code generator that converts text prompts and wireframes into prod
 
 ## 🌐 Live Demo
 
-| Service  | URL |
-|----------|-----|
-| 🖥️ Frontend | [https://sanforge-app.vercel.app](https://sanforge-app.vercel.app) |
-
-> **Note:** The backend is hosted on Render's free tier and may take up to **50 seconds** to respond after inactivity (cold start).
+🔗 [https://sanforge-app.vercel.app](https://sanforge-app.vercel.app)
 
 ## 🚀 Features
 
