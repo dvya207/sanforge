@@ -149,10 +149,11 @@ export const login = async (req, res) => {
       expiresIn: "1d",
     });
 
+    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: isProduction,          // true on Render (HTTPS), false on localhost
+      sameSite: isProduction ? "none" : "lax", // "none" required for cross-origin cookies
       maxAge: 24 * 60 * 60 * 1000,
     });
 
