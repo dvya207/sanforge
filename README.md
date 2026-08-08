@@ -1,18 +1,26 @@
 # SanForge
 
-![SanForge Logo](https://via.placeholder.com/150) <!-- Replace with actual logo if available -->
-
 AI-powered UI code generator that converts text prompts and wireframes into production-ready frontend code. Features rapid prototyping, secure JWT-based authentication with OTP, and a workspace to preview, manage, and export generated UI components—helping developers build interfaces faster and more efficiently.
+
+## 🌐 Live Demo
+
+| Service  | URL |
+|----------|-----|
+| 🖥️ Frontend | [https://sanforge-app.vercel.app](https://sanforge-app.vercel.app) |
+| ⚙️ Backend API | [https://sanforge-backend.onrender.com](https://sanforge-backend.onrender.com) |
+
+> **Note:** The backend is hosted on Render's free tier and may take up to **50 seconds** to respond after inactivity (cold start).
 
 ## 🚀 Features
 
-- **AI-Powered Code Generation**: Transform natural language prompts and wireframes into clean, production-ready React components.
+- **AI-Powered Code Generation**: Transform natural language prompts and wireframes into clean, production-ready UI components.
+- **Multi-Framework Support**: Generate code for HTML+CSS, HTML+Tailwind, HTML+Bootstrap, HTML+CSS+JS, and React+Tailwind.
 - **Rapid Prototyping**: Quickly generate and iterate on UI components without manual coding.
-- **Secure Authentication**: JWT-based login with OTP verification for user security.
+- **Secure Authentication**: JWT-based login with email OTP verification.
 - **Component Management**: Save, preview, and export generated UI components.
 - **Responsive Design**: Generated components are mobile-friendly and adaptable.
-- **Real-time Preview**: Instant visualization of generated code in the browser.
-- **Export Options**: Download components as reusable code snippets.
+- **Real-time Preview**: Instant visualization of generated code via Sandpack.
+- **Export Options**: Download components as reusable code files.
 
 ## 🛠 Tech Stack
 
@@ -20,32 +28,45 @@ AI-powered UI code generator that converts text prompts and wireframes into prod
 
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **JWT** - Authentication
-- **Nodemailer** - Email sending for OTP
+- **MongoDB Atlas** - Cloud NoSQL database
+- **JWT** - Authentication tokens
+- **Resend** - Email sending for OTP (production-ready)
 - **bcrypt** - Password hashing
 
 ### Frontend
 
 - **React** - UI library
 - **Vite** - Build tool and dev server
-- **CSS** - Styling
+- **Tailwind CSS** - Styling
 - **Axios** - HTTP client for API calls
+- **Sandpack** - In-browser code editor & preview
+- **Google Gemini API** - AI code generation
+
+### Hosting
+
+- **Vercel** - Frontend deployment
+- **Render** - Backend deployment
+- **MongoDB Atlas** - Database hosting
+- **Cloudinary** - Image uploads
+- **Resend** - Transactional email
 
 ## 📋 Prerequisites
 
-Before running this application, make sure you have the following installed:
+Before running this application locally, make sure you have:
 
-- **Node.js** (v14 or higher) - [Download here](https://nodejs.org/)
-- **MongoDB** - [Download here](https://www.mongodb.com/try/download/community)
+- **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
 - **Git** - [Download here](https://git-scm.com/)
+- A **MongoDB Atlas** account - [Sign up here](https://www.mongodb.com/atlas)
+- A **Resend** account - [Sign up here](https://resend.com)
+- A **Google Gemini API Key** - [Get here](https://aistudio.google.com/app/apikey)
+- A **Cloudinary** account - [Sign up here](https://cloudinary.com)
 
 ## 🔧 Installation
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/sanforge.git
+   git clone https://github.com/dvya207/sanforge.git
    cd sanforge
    ```
 
@@ -63,28 +84,31 @@ Before running this application, make sure you have the following installed:
    npm install
    ```
 
-4. **Set up environment variables:**
+4. **Set up backend environment variables:**
 
-   Create a `.env` file in the `backend` directory with the following variables:
+   Create a `.env` file in the `backend` directory:
 
-   ```
+   ```env
    PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/sanforge
-   JWT_SECRET=your_jwt_secret_here
-   EMAIL_USER=your_email@gmail.com
-   EMAIL_PASS=your_email_password
+   MONGODB_URI=your_mongodb_atlas_connection_string
+   JWT_SECRET=your_strong_jwt_secret
+   FRONTEND_URL=http://localhost:5173
+   RESEND_API_KEY=your_resend_api_key
+   NODE_ENV=development
    ```
 
-   For the frontend, create a `.env` file in the `frontend` directory:
+5. **Set up frontend environment variables:**
 
-   ```
+   Create a `.env` file in the `frontend` directory:
+
+   ```env
    VITE_API_URL=http://localhost:5000/api
+   VITE_GEMINI_API_KEY=your_gemini_api_key
+   VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+   VITE_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
    ```
 
-5. **Start MongoDB:**
-   Ensure MongoDB is running on your system.
-
-## 🚀 Usage
+## 🚀 Running Locally
 
 1. **Start the backend server:**
 
@@ -104,36 +128,39 @@ Before running this application, make sure you have the following installed:
 
    The app will be available at `http://localhost:5173`.
 
-3. **Access the application:**
-   Open your browser and navigate to `http://localhost:5173` to start using SanForge.
-
 ### Key Workflows
 
-- **Sign Up/Login**: Create an account or log in with OTP verification.
+- **Sign Up**: Create an account with OTP email verification.
+- **Login**: Authenticate securely with your credentials.
 - **Generate UI**: Enter a text prompt or upload a wireframe to generate code.
-- **Preview & Edit**: View the generated component in real-time and make adjustments.
+- **Preview & Edit**: View the generated component in real-time.
 - **Save & Export**: Save components to your workspace and export as code files.
 
-## 📚 API Documentation
+## 📚 API Endpoints
 
-### Authentication Endpoints
+### Authentication
 
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/login` - User login
-- `POST /api/auth/verify-otp` - OTP verification
-- `POST /api/auth/forgot-password` - Password reset request
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/send-signup-otp` | Send OTP for signup |
+| POST | `/api/auth/signup` | Register a new user |
+| POST | `/api/auth/login` | User login |
+| POST | `/api/auth/logout` | User logout |
+| GET  | `/api/auth/profile` | Get current user profile |
+| POST | `/api/auth/forgot-password` | Send password reset OTP |
+| POST | `/api/auth/reset-password` | Reset password with OTP |
 
-### Component Management Endpoints
+### Saved Components
 
-- `GET /api/saved` - Retrieve saved components
-- `POST /api/saved` - Save a new component
-- `DELETE /api/saved/:id` - Delete a saved component
-
-For detailed API documentation, refer to the [API Docs](./backend/docs/api.md) (if available).
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | `/api/saved` | Retrieve saved components |
+| POST   | `/api/saved/save` | Save a generated component |
+| DELETE | `/api/saved/:id` | Delete a saved component |
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+Contributions are welcome! Please follow these steps:
 
 1. Fork the repository.
 2. Create a feature branch: `git checkout -b feature/your-feature-name`.
@@ -141,12 +168,10 @@ We welcome contributions! Please follow these steps:
 4. Push to the branch: `git push origin feature/your-feature-name`.
 5. Open a pull request.
 
-Please read our [Contributing Guidelines](./CONTRIBUTING.md) for more details.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ---
 
-Made with ❤️ by the SanForge team.
+Made with ❤️ by dvya207.
