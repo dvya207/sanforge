@@ -25,7 +25,7 @@ AI-powered UI code generator that converts text prompts and wireframes into prod
 - **Express.js** - Web framework
 - **MongoDB Atlas** - Cloud NoSQL database
 - **JWT** - Authentication tokens
-- **Resend** - Email sending for OTP (production-ready)
+- **Brevo (Sendinblue)** - HTTP API email sending for OTP
 - **bcrypt** - Password hashing
 
 ### Frontend
@@ -43,7 +43,7 @@ AI-powered UI code generator that converts text prompts and wireframes into prod
 - **Render** - Backend deployment
 - **MongoDB Atlas** - Database hosting
 - **Cloudinary** - Image uploads
-- **Resend** - Transactional email
+- **Brevo** - Transactional email
 
 ## 📋 Prerequisites
 
@@ -52,9 +52,10 @@ Before running this application locally, make sure you have:
 - **Node.js** (v18 or higher) - [Download here](https://nodejs.org/)
 - **Git** - [Download here](https://git-scm.com/)
 - A **MongoDB Atlas** account - [Sign up here](https://www.mongodb.com/atlas)
-- A **Resend** account - [Sign up here](https://resend.com)
+- A **Brevo** account - [Sign up here](https://www.brevo.com)
 - A **Google Gemini API Key** - [Get here](https://aistudio.google.com/app/apikey)
 - A **Cloudinary** account - [Sign up here](https://cloudinary.com)
+
 
 ## 🔧 Installation
 
@@ -85,12 +86,14 @@ Before running this application locally, make sure you have:
 
    ```env
    PORT=5000
-   MONGODB_URI=your_mongodb_atlas_connection_string
+   MONGO_URI=your_mongodb_atlas_connection_string
    JWT_SECRET=your_strong_jwt_secret
    FRONTEND_URL=http://localhost:5173
-   RESEND_API_KEY=your_resend_api_key
+   BREVO_API_KEY=your_brevo_api_key
+   BREVO_SENDER_EMAIL=your_verified_email@example.com
    NODE_ENV=development
    ```
+
 
 5. **Set up frontend environment variables:**
 
