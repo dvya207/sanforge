@@ -89,7 +89,12 @@ export default function Signup() {
         "/auth/send-signup-otp", // New endpoint
         { email: form.email }
       );
-      toast.success(res.data.message || "OTP sent to your email!");
+      if (res.data.otp) {
+        setOtp(res.data.otp);
+        toast.success(`OTP Sent! Code: ${res.data.otp}`);
+      } else {
+        toast.success(res.data.message || "OTP sent to your email!");
+      }
       setOtpSent(true);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to send OTP.");
@@ -97,6 +102,7 @@ export default function Signup() {
     } finally {
       setUploading(false);
     }
+
   };
 
   const handleSubmit = async e => {
