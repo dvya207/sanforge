@@ -141,13 +141,15 @@ export const signup = async (req, res) => {
   }
 };
 
-// ✅ Login (Existing code - NO CHANGES)
+// ✅ Login
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user || !user.password) {
+      return res.status(404).json({ message: "User not found or account setup incomplete" });
+    }
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ message: "Invalid password" });
@@ -172,9 +174,11 @@ export const login = async (req, res) => {
       },
     });
   } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 // ✅ Get Profile (Existing code - NO CHANGES)
 export const getProfile = async (req, res) => {
