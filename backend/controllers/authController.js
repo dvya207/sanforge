@@ -35,6 +35,8 @@ export const sendSignupOtp = async (req, res) => {
 
     await user.save();
 
+    console.log(`🔑 [OTP GENERATED] for ${email}: ${otp}`);
+
     await sendEmail(
       email,
       "Email Verification OTP - SanForge Signup",
@@ -45,6 +47,7 @@ export const sendSignupOtp = async (req, res) => {
         <p>This OTP will expire in 5 minutes.</p>
       `
     );
+
 
     res.json({ message: "OTP sent to your email successfully" });
   } catch (err) {
@@ -240,6 +243,8 @@ export const sendOtp = async (req, res) => {
     user.otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes expiry
     await user.save(); // 4. Send Email
 
+    console.log(`🔑 [RESET OTP GENERATED] for ${email}: ${otp}`);
+
     await sendEmail(
       email,
       "Password Reset OTP - SanForge",
@@ -250,6 +255,7 @@ export const sendOtp = async (req, res) => {
         <p>This OTP will expire in 5 minutes.</p>
       `
     );
+
 
     res.json({
       message: "If the email is registered, you will receive an OTP shortly.",
