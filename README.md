@@ -1,21 +1,44 @@
-# SanForge
+<div align="center">
 
-AI-powered UI code generator that converts text prompts and wireframes into production-ready frontend code. Features rapid prototyping, secure JWT-based authentication with OTP, and a workspace to preview, manage, and export generated UI components—helping developers build interfaces faster and more efficiently.
+# ⚡ SanForge ⚡
+### *Transforming Text & Wireframes into Production-Ready UI in Seconds*
 
-## 🌐 Live Demo
+[![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-sanforge--app.vercel.app-blueviolet?style=for-the-badge&logo=vercel)](https://sanforge-app.vercel.app)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-339933?style=for-the-badge&logo=nodedotjs)](https://nodejs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/atlas)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](./LICENSE)
 
-🔗 [https://sanforge-app.vercel.app](https://sanforge-app.vercel.app)
+---
 
-## 🚀 Features
+</div>
 
-- **AI-Powered Code Generation**: Transform natural language prompts and wireframes into clean, production-ready UI components.
-- **Multi-Framework Support**: Generate code for HTML+CSS, HTML+Tailwind, HTML+Bootstrap, HTML+CSS+JS, and React+Tailwind.
-- **Rapid Prototyping**: Quickly generate and iterate on UI components without manual coding.
-- **Secure Authentication**: JWT-based login with email OTP verification.
-- **Component Management**: Save, preview, and export generated UI components.
-- **Responsive Design**: Generated components are mobile-friendly and adaptable.
-- **Real-time Preview**: Instant visualization of generated code via Sandpack.
-- **Export Options**: Download components as reusable code files.
+## ✨ Overview
+
+**SanForge** is a state-of-the-art, fullstack AI workspace that bridges the gap between design concepts and front-end engineering. Powered by Google Gemini AI, modern MERN architecture, and interactive live previews, SanForge turns plain text descriptions and visual wireframes into clean, responsive, production-ready code instantly.
+
+Whether you're prototyping a rapid MVP, crafting bespoke Tailwind UI components, or generating full multi-framework React structures, SanForge accelerates your frontend workflow with real-time editing, secure OTP authentication, and cloud-synced component management.
+
+---
+
+## 🌐 Live Application
+
+🚀 Experience SanForge live in action: **[https://sanforge-app.vercel.app](https://sanforge-app.vercel.app)**
+
+---
+
+## 🚀 Key Highlights & Features
+
+- 🧠 **AI-Powered Code Synthesis**: Convert natural language prompts and hand-drawn wireframes into modular, semantic code.
+- 🎨 **Multi-Stack Output**: Seamlessly target `HTML + CSS`, `Tailwind CSS`, `Bootstrap`, `Vanilla JS`, or `React + Tailwind`.
+- ⚡ **Live Interactive Preview**: Real-time code execution powered by **Sandpack** for instant in-browser feedback.
+- 🔐 **Hardened Authentication**: Secure JWT session handling coupled with **Brevo HTTP API** for OTP verification.
+- ☁️ **Cloud Workspace**: Save, edit, organize, and export your generated UI components anytime across devices.
+- 📱 **Fully Responsive Layouts**: Automatically crafted with mobile-first responsiveness and dark-mode elegance.
+
+---
+
 
 ## 🛠 Tech Stack
 
