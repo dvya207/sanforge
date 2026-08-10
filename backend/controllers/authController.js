@@ -146,16 +146,14 @@ export const login = async (req, res) => {
     if (!valid) return res.status(401).json({ message: "Invalid password" });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "12h", // Shortened from 1d for better security
+      expiresIn: "1d",
     });
 
-    const isProduction = process.env.NODE_ENV === "production";
     res.cookie("token", token, {
       httpOnly: true,
-      secure: isProduction,          // true on Render (HTTPS), false on localhost
-      sameSite: isProduction ? "none" : "lax", // "none" required for cross-origin cookies
-      maxAge: 12 * 60 * 60 * 1000, // Align cookie maxAge with JWT ttl (12h)
-      expires: new Date(Date.now() + 12 * 60 * 60 * 1000), // Explicit expiry
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.json({
@@ -216,13 +214,7 @@ export const updateProfile = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  const isProduction = process.env.NODE_ENV === "production";
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
-    expires: new Date(0),
-  });
+  res.clearCookie("token");
   res.json({ message: "Logged out successfully" });
 };
 
