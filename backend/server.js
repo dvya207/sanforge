@@ -2,11 +2,22 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import dns from "dns";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import savedRoutes from "./routes/savedRoutes.js";
 
+// Fix Node.js DNS SRV lookup issues on Windows
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {
+  console.warn("Could not set custom DNS servers:", e.message);
+}
+dns.setDefaultResultOrder("ipv4first");
+
 dotenv.config();
+
+
 const app = express();
 
 // ✅ Middleware
